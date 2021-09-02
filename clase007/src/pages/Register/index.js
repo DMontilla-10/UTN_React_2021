@@ -1,7 +1,8 @@
 import React from "react";
 import { Box } from '@material-ui/core'
+import RegisterForm from "../../components/RegisterForm";
 
-const RegisterView = () => {
+const RegisterView = ({setUser}) => {
   return (
     <Box
       style={{
@@ -13,7 +14,7 @@ const RegisterView = () => {
       }}
       component="div"
     >
-      <RegisterForm />     
+      <RegisterForm setUser={setUser}/>     
     </Box>
   );
 };
