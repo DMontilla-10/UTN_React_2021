@@ -1,21 +1,28 @@
 import React from "react";
-import { Box } from '@material-ui/core'
 import RegisterForm from "../../components/RegisterForm";
+import { Box } from "@material-ui/core";
 
-const RegisterView = ({setUser}) => {
+const RegisterView = ({ setIsLogged, setUser, setGoHome, setIsRegistered }) => {
   return (
-    <Box
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
-      }}
-      component="div"
-    >
-      <RegisterForm setUser={setUser}/>     
-    </Box>
+    <>
+      <Box
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+        component="div"
+      >
+        <RegisterForm
+          setUser={setUser}
+          setIsLogged={setIsLogged}
+          setGoHome={setGoHome}
+          setIsRegistered={setIsRegistered}
+        />
+      </Box>
+    </>
   );
 };
 

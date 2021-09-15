@@ -1,10 +1,10 @@
 /**https://formik.org/docs/tutorial */
 import React from "react";
-import { Box, Link, Card } from "@material-ui/core";
+import { Box, Link } from "@material-ui/core";
 import LoginForm from "../../components/LoginForm";
 import { useStyles } from "./styles";
 
-export default function LoginView() {
+export default function LoginView({ setIsLogged, setGoHome }) {
   const classes = useStyles();
 
   return (
@@ -18,10 +18,17 @@ export default function LoginView() {
       }}
       component="div"
     >
-      <LoginForm />
-      <div style={{marginTop: '1rem'}}>
-        <Link className={classes.link} href="#">
-          Sos nuevo? REGISTRATE!
+      <LoginForm setIsLogged={setIsLogged} setGoHome={setGoHome} />
+      <div style={{ marginTop: "1rem" }}>
+        <Link
+          component="button"
+          underline="hover"
+          className={classes.link}
+          onClick={() => {
+            setIsLogged((prevState) => !prevState);
+          }}
+        >
+          {"Sos nuevo? REGISTRATE!"}
         </Link>
       </div>
     </Box>

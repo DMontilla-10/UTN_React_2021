@@ -1,28 +1,32 @@
 import React, { useState } from "react";
-import { useFormik } from "formik";
+/**https://formik.org/docs/tutorial */
+import { makeStyles } from "@material-ui/core/styles";
+/** useFormik () es un hook de React personalizado que devuelve todos los estados y ayudantes de
+ * Formik directamente. A pesar de su nombre, no está destinado a la mayoría de los casos de uso.
+ */
+import { useFormik, Field } from "formik";
 /**npm i yup --save */
 import * as Yup from "yup";
-import { makeStyles } from "@material-ui/core/styles";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
+import Card from "@material-ui/core/Card";
 import {
-  Card,
-  TextField,
-  Button,
-  FormControl,
-  InputLabel,
   Select,
   MenuItem,
+  FormControl,
+  InputLabel,
   FormLabel,
-  FormGroup,
-  FormControlLabel,
-  Checkbox,
   RadioGroup,
+  FormControlLabel,
   Radio,
+  FormGroup,
+  Checkbox,
+  Grid,
 } from "@material-ui/core";
-import { nationalities } from "../utils/nationalities";
 
 const useStyles = makeStyles({
   root: {
-    maxWidth: 600,
+    minWidth: 600,
   },
   form: {
     display: "flex",
@@ -39,7 +43,9 @@ const useStyles = makeStyles({
   },
 });
 
-const RegisterForm = ({ setUser }) => {
+const nationalities = ["Argentina", "Brasilera", "Paraguaya"];
+
+const RegisterForm = ({ setUser, setIsRegistered, setIsLogged, setGoHome }) => {
   const classes = useStyles();
 
   const [interests, setInterests] = useState({
@@ -70,26 +76,28 @@ const RegisterForm = ({ setUser }) => {
       lastName: Yup.string("Ingresa tu apellido").required(
         "El apellido es requerido"
       ),
-      email: Yup.string("Enter your email")
-        .email("Enter a valid email")
-        .required("Email is required"),
-      password: Yup.string("Enter your password")
+      email: Yup.string("Ingresá tu email")
+        .email("Ingresá un email válido")
+        .required("El email es requerido"),
+      password: Yup.string("Ingresá tu contraseña")
+        /**Validaciones personalizadas con RegEx */
         .matches(/(^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,15}$)/, {
-          message: "La contraseña debe tener al menos una letra",
+          message: "La contraseña no cumple con los requisitos",
           excludeEmptyString: false,
         })
-        // .min(8, "La contraseña debe tener al menos 8 caracteres")
-        .required("Password is required"),
+        .required("La contraseña es requerida"),
     }),
     onSubmit: (values) => {
-      //   alert(JSON.stringify(values, null, 2));
+      // alert(JSON.stringify(values, null, 2));
       setUser({ ...values, interests: interests });
+      setIsRegistered((prevState) => !prevState);
+      setGoHome(true)
     },
   });
 
   return (
     <Card className={classes.root}>
-      <form className={classes.form} onSubmit={formik.handleSubmit}>
+      <form onSubmit={formik.handleSubmit} className={classes.form}>
         <div className={classes.div}>
           <TextField
             className={classes.input}
@@ -98,7 +106,9 @@ const RegisterForm = ({ setUser }) => {
             label="Nombre"
             value={formik.values.firstName}
             onChange={formik.handleChange}
+            /** Si se interactuó con el campo y existe algún error de validación */
             error={formik.touched.firstName && Boolean(formik.errors.firstName)}
+            /** Si se interactuó con el campo,el campo quedó vacío al enviar y el campo es requerido */
             helperText={formik.touched.firstName && formik.errors.firstName}
             variant="outlined"
             size="small"
@@ -110,7 +120,9 @@ const RegisterForm = ({ setUser }) => {
             label="Apellido"
             value={formik.values.lastName}
             onChange={formik.handleChange}
+            /** Si se interactuó con el campo y existe algún error de validación */
             error={formik.touched.lastName && Boolean(formik.errors.lastName)}
+            /** Si se interactuó con el campo,el campo quedó vacío al enviar y el campo es requerido */
             helperText={formik.touched.lastName && formik.errors.lastName}
             variant="outlined"
             size="small"
@@ -124,7 +136,9 @@ const RegisterForm = ({ setUser }) => {
             label="Email"
             value={formik.values.email}
             onChange={formik.handleChange}
+            /** Si se interactuó con el campo y existe algún error de validación */
             error={formik.touched.email && Boolean(formik.errors.email)}
+            /** Si se interactuó con el campo,el campo quedó vacío al enviar y el campo es requerido */
             helperText={formik.touched.email && formik.errors.email}
             variant="outlined"
             size="small"
@@ -133,7 +147,7 @@ const RegisterForm = ({ setUser }) => {
             className={classes.input}
             id="password"
             name="password"
-            label="Password"
+            label="Contraseña"
             type="password"
             value={formik.values.password}
             onChange={formik.handleChange}
@@ -146,21 +160,22 @@ const RegisterForm = ({ setUser }) => {
         <div className={classes.div}>
           <FormControl
             variant="outlined"
-            className={classes.input}
             size="small"
+            className={classes.input}
           >
             <InputLabel id="nationality">Nacionalidad</InputLabel>
             <Select
               labelId="nationality"
               id="nationality"
               name="nationality"
+              defaultValue="Argentina"
               value={formik.values.nationality}
               onChange={formik.handleChange}
               label="Nacionalidad"
             >
               {nationalities.map((nationality) => {
                 return (
-                  <MenuItem key={{ nationality }} value={nationality}>
+                  <MenuItem key={nationality} value={nationality}>
                     {nationality}
                   </MenuItem>
                 );
@@ -201,13 +216,13 @@ const RegisterForm = ({ setUser }) => {
                 label="Masculino"
               />
               <FormControlLabel
-                value="no-binario"
+                value="no-binario "
                 control={<Radio />}
                 label="No binario"
               />
             </RadioGroup>
           </FormControl>
-          <FormControl component="fieldset" className={classes.input}>
+          <FormControl className={classes.input} component="fieldset">
             <FormLabel component="legend">Intereses</FormLabel>
             <FormGroup>
               <FormControlLabel
@@ -246,8 +261,8 @@ const RegisterForm = ({ setUser }) => {
         <TextField
           className={classes.input}
           id="description"
-          name="description"
           label="Descripción"
+          name="description"
           multiline
           rows={4}
           onChange={formik.handleChange}
@@ -259,8 +274,16 @@ const RegisterForm = ({ setUser }) => {
           variant="contained"
           type="submit"
         >
-          entrar
+          Registrarme
         </Button>
+        {/* <Button
+          style={{ margin: ".3rem 0 .3rem 0" }}
+          color="primary"
+          variant="outlined"
+          onClick={() => setIsLogged((prevState) => !prevState)}
+        >
+          Cancelar
+        </Button> */}
       </form>
     </Card>
   );
