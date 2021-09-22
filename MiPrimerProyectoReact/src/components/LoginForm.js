@@ -4,6 +4,8 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { makeStyles } from "@material-ui/core/styles";
 import {Card, TextField, Button } from '@material-ui/core'
+import { useDispatch } from 'react-redux';
+import { signIn } from '../actions';
 
 const useStyles = makeStyles({
     root: {
@@ -22,6 +24,8 @@ const useStyles = makeStyles({
 const LoginForm = () => {
   const classes = useStyles();
 
+  const dispatch = useDispatch()
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -36,7 +40,8 @@ const LoginForm = () => {
         .required("Password is required"),
     }),
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      // alert(JSON.stringify(values, null, 2));
+      dispatch(signIn())
     },
   });
 

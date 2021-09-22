@@ -1,0 +1,18 @@
+Redux: Nos va a permitir manejar el estado global de la app
+
+React-redux: Nos va a permitir vincular React con la lógica de Redux
+
+ESTRUCTURA
+1°) STORE:
+Se guarda el estado global
+
+2°) ACTION: 
+Describen que acciones se van a realizar para modificar el estado
+
+3°) REDUCER:
+Describe cómo la action va a transformar el estado actual en el siguiente
+
+4°) DISPATCH:
+Son la forma en que se ejecutan las actions
+
+STORE -> DISPATCH -> ACTION -> REDUCER -> STORE

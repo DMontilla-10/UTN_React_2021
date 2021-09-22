@@ -212,11 +212,14 @@ const Home = () => {
           </List>
           <Divider />
           <List>
-            <ListItem>
+          <ListItem 
+            button 
+            // onClick={}
+          >
               <ListItemIcon>
                 <ExitToAppIcon />
               </ListItemIcon>
-              <ListItemText>Cerrar sesión</ListItemText>
+              <ListItemText primary={"Sign out"} />
             </ListItem>
           </List>
         </Drawer>
