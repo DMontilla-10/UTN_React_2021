@@ -19,6 +19,8 @@ import HomeIcon from "@material-ui/icons/Home";
 import ContactMailIcon from "@material-ui/icons/ContactMail";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import AccessibilityIcon from "@material-ui/icons/Accessibility";
+import { useDispatch } from "react-redux";
+import { signOut } from "../../actions";
 
 import {
   BrowserRouter as Router,
@@ -89,6 +91,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Home = () => {
   const classes = useStyles();
+  const dispatch = useDispatch()
 
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -100,6 +103,10 @@ const Home = () => {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  const handleSignOut = () => {
+    dispatch(signOut())
+  }
 
   let tipoDeSuscripción = 'pro';
 
@@ -214,7 +221,7 @@ const Home = () => {
           <List>
           <ListItem 
             button 
-            // onClick={}
+            onClick={handleSignOut}
           >
               <ListItemIcon>
                 <ExitToAppIcon />
