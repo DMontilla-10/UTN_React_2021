@@ -12,8 +12,9 @@ function App() {
 
   return (
     <StrictMode>
-      {usuarioLogeado ? <Home /> : <LoginView />}
+      {/* {usuarioLogeado ? <Home /> : <LoginView />} */}
       {/* <RegisterView setUser={setUser}/> */}
+      <Home/>
     </StrictMode>
   );
 }

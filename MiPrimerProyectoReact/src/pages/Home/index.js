@@ -30,6 +30,7 @@ import {
   Redirect,
 } from "react-router-dom";
 import { HerramientasPro } from "../../components/HerramientasPro";
+import { TablaDeUsuarios } from "../../components/TablaDeUsuarios";
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
@@ -238,7 +239,7 @@ const Home = () => {
           <div className={classes.drawerHeader} />
           <Switch>
             <Route exact path="/">
-              Inicio...
+              <TablaDeUsuarios/>
             </Route>
             <Route path="/contacto">Contacto...</Route>
             <Route path="/nosotros">Nosotros...</Route>
